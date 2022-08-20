@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Plantina</string>
-    <string name="tagline">dsfsfd</string>
+    <string name="tagline">A smart way to protect your plant</string>
     <string name="p">P</string>
     <string name="lantina">lantina</string>
     <string name="please_click_the_button_below_to_start_using_the_features_of_this_app">please click the button below to start using the features of this app</string>
@@ -8,4 +8,8 @@
     <string name="start_plant_analysis">Start Plant Analysis</string>
     <string name="open_camera">Open Camera</string>
     <string name="open_gallery">Open Gallery</string>
+    <string name="loading">Loading...</string>
+    <string name="click_to_find_out">Click To Find Out</string>
+    <string name="result">Result:</string>
+    <string name="plant_detection">Plant Detection</string>
 </resources>

@@ -19,11 +19,12 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Plantina"
+        android:theme="@style/AppNoActionBar"
         tools:targetApi="31">
         <activity
             android:name=".PlantDetectActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".HomeActivity"
             android:exported="false"
