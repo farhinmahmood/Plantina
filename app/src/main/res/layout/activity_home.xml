@@ -1,9 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
+    android:orientation="vertical"
     tools:context="com.saida.mahmood.plantina.HomeActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/welcomePic"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:background="@drawable/plant_pic"
+        android:layout_alignParentEnd="true"/>
+
+    <LinearLayout
+        android:layout_below="@+id/welcomePic"
+        android:id="@+id/welcomeTagLl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/_20sdp"
+        android:paddingStart="@dimen/_20sdp"
+        android:paddingBottom="@dimen/_20sdp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_sans_semibold"
+            android:text="@string/welcome"
+            android:textColor="@color/lighter_green"
+            android:textSize="@dimen/_28ssp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:fontFamily="@font/nunito_sans"
+            android:text="@string/please_click_the_button_below_to_start_using_the_features_of_this_app"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_12ssp" />
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/welcomeTagLl"
+        android:clipToPadding="false"
+        android:padding="@dimen/_10sdp"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:id="@+id/plantLl"
+            android:layout_width="@dimen/_180sdp"
+            android:layout_height="@dimen/_108sdp"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:background="@drawable/green_box_custom"
+            android:elevation="@dimen/_5sdp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="@drawable/leaf" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:fontFamily="@font/nunito_sans"
+                android:text="@string/start_plant_analysis"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_13ssp" />
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

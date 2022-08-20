@@ -3,4 +3,9 @@
     <string name="tagline">dsfsfd</string>
     <string name="p">P</string>
     <string name="lantina">lantina</string>
+    <string name="please_click_the_button_below_to_start_using_the_features_of_this_app">please click the button below to start using the features of this app</string>
+    <string name="welcome">Welcome</string>
+    <string name="start_plant_analysis">Start Plant Analysis</string>
+    <string name="open_camera">Open Camera</string>
+    <string name="open_gallery">Open Gallery</string>
 </resources>
