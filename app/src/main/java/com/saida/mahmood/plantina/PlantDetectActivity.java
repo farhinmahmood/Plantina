@@ -5,14 +5,18 @@ import static com.saida.mahmood.plantina.TempFile.image;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.IntentService;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 
@@ -40,7 +44,7 @@ import java.util.Map;
 public class PlantDetectActivity extends AppCompatActivity {
     private ImageView imageIv;
     Interpreter plantTfLite;
-    private TextView plantTv, startTv;
+    private TextView plantTv, startTv, webSearchTv;
     private TensorBuffer outputProbabilityBuffer;
     private TensorProcessor probabilityProcessor;
     private TensorImage inputImageBuffer;
@@ -52,6 +56,7 @@ public class PlantDetectActivity extends AppCompatActivity {
     private List<String> plantLabels;
     private  int imageSizeX;
     private  int imageSizeY;
+    private String diseaseStr ="";
     LottieAnimationView imageScan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +66,9 @@ public class PlantDetectActivity extends AppCompatActivity {
         imageScan = findViewById(R.id.imageScanLottie);
         imageScan.setVisibility(View.GONE);
         imageIv = findViewById(R.id.imageIv);
+        webSearchTv = findViewById(R.id.webSearchTv);
         plantTv = findViewById(R.id.plantTv);
-        startTv = findViewById(R.id.startTv);
+        startTv = findViewById(R.id.searchTv);
         bitmap =  image;
         imageIv.setImageBitmap(bitmap);
 
@@ -86,6 +92,19 @@ public class PlantDetectActivity extends AppCompatActivity {
                     }
                 }, 5000);
 
+            }
+        });
+        webSearchTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(diseaseStr.isEmpty()){
+                    Toast.makeText(PlantDetectActivity.this,"Please start the prediction first", Toast.LENGTH_SHORT).show();
+                }else{
+                    String url = "https://en.wikipedia.org/wiki/"+diseaseStr;
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    startActivity(i);
+                }
             }
         });
 
@@ -112,10 +131,10 @@ public class PlantDetectActivity extends AppCompatActivity {
         inputImageBuffer = loadImage(bitmap);
 
         plantTfLite.run(inputImageBuffer.getBuffer(),outputProbabilityBuffer.getBuffer().rewind());
-        showAgeResult();
+        showPlantResult();
     }
 
-    private void showAgeResult() {
+    private void showPlantResult() {
         try{
             plantLabels = FileUtil.loadLabels(this,"plantmodel.txt");
         }catch (Exception e){
@@ -129,6 +148,7 @@ public class PlantDetectActivity extends AppCompatActivity {
         for (Map.Entry<String, Float> entry : labeledProbability.entrySet()) {
             if (entry.getValue()==maxValueInMap) {
                 plantTv.setText(entry.getKey());
+                diseaseStr = entry.getKey();
             }
         }
     }
