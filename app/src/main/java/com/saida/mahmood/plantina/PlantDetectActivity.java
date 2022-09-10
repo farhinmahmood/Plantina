@@ -37,7 +37,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,12 +59,14 @@ public class PlantDetectActivity extends AppCompatActivity {
     private  int imageSizeX;
     private  int imageSizeY;
     private String diseaseStr ="";
+    private HashMap<String,String> tagMap;
     LottieAnimationView imageScan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plant_detect);
         getWindow().setStatusBarColor(getResources().getColor(R.color.black));
+        tagMap= new HashMap<String,String>();
         imageScan = findViewById(R.id.imageScanLottie);
         imageScan.setVisibility(View.GONE);
         imageIv = findViewById(R.id.imageIv);
@@ -71,6 +75,7 @@ public class PlantDetectActivity extends AppCompatActivity {
         startTv = findViewById(R.id.searchTv);
         bitmap =  image;
         imageIv.setImageBitmap(bitmap);
+        labelFix();
 
         try {
             plantTfLite = new Interpreter(loadModelFile(this,"plantmodel.tflite"));
@@ -100,13 +105,62 @@ public class PlantDetectActivity extends AppCompatActivity {
                 if(diseaseStr.isEmpty()){
                     Toast.makeText(PlantDetectActivity.this,"Please start the prediction first", Toast.LENGTH_SHORT).show();
                 }else{
-                    String url = "https://en.wikipedia.org/wiki/"+diseaseStr;
+                    String temp= "";
+                    for(Map.Entry m : tagMap.entrySet()){
+                        if(diseaseStr.equalsIgnoreCase((String) m.getKey())){
+                            temp = (String) m.getValue();
+                            break;
+                        }
+                    }
+                    String url = "https://en.wikipedia.org/wiki/"+temp;
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse(url));
                     startActivity(i);
                 }
             }
         });
+
+    }
+
+    private void labelFix() {
+        tagMap.put("Apple___Apple_scab","Apple_scab");
+        tagMap.put("Apple___Black_rot","Black_rot");
+        tagMap.put("Apple___Cedar_apple_rust","Gymnosporangium_juniperi-virginianae");
+        tagMap.put("Apple___healthy","Apple");
+        tagMap.put("Blueberry___healthy","Blueberry");
+        tagMap.put("Cherry_(including_sour)___healthy","Cherry");
+        tagMap.put("Cherry_(including_sour)___Powdery_mildew","Powdery_mildew");
+        tagMap.put("Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot","Corn_grey_leaf_spot");
+        tagMap.put("Corn_(maize)___Common_rust_","Puccinia_sorghi");
+        tagMap.put("Corn_(maize)___healthy","Maize");
+        tagMap.put("Corn_(maize)___Northern_Leaf_Blight","Northern_corn_leaf_blight");
+        tagMap.put("Grape___Black_rot","Black_rot_(grape_disease)");
+        tagMap.put("Grape___Esca_(Black_Measles)","Esca_(grape_disease)");
+        tagMap.put("Grape___healthy","Grape");
+        tagMap.put("Grape___Leaf_blight_(Isariopsis_Leaf_Spot)","Isariopsis");
+        tagMap.put("Orange___Haunglongbing_(Citrus_greening)","Citrus_greening_disease");
+        tagMap.put("Peach___Bacterial_spot","Bacterial_leaf_scorch");
+        tagMap.put("Peach___healthy","Peach");
+        tagMap.put("Pepper,_bell___Bacterial_spot","Xanthomonas_campestris_pv._vesicatoria");
+        tagMap.put("Pepper,_bell___healthy","Bell_pepper");
+        tagMap.put("Potato___Early_blight","Potato_blight");
+        tagMap.put("Potato___healthy","Potato");
+        tagMap.put("Potato___Late_blight","Phytophthora_infestans");
+        tagMap.put("Raspberry___healthy","Raspberry");
+        tagMap.put("Soybean___healthy","Soybean");
+        tagMap.put("Squash___Powdery_mildew","Powdery_mildew");
+        tagMap.put("Strawberry___healthy","Strawberry");
+        tagMap.put("Strawberry___Leaf_scorch","Diplocarpon_earlianum");
+        tagMap.put("Tomato___Bacterial_spot","Xanthomonas_campestris_pv._vesicatoria");
+        tagMap.put("Tomato___Early_blight","Alternaria_solani");
+        tagMap.put("Tomato___healthy","Tomato");
+        tagMap.put("Tomato___Late_blight","Phytophthora_infestans");
+        tagMap.put("Tomato___Leaf_Mold","Tomato_leaf_mold");
+        tagMap.put("Tomato___Septoria_leaf_spot","Septoria_lycopersici");
+        tagMap.put("Tomato___Spider_mites Two-spotted_spider_mite","Tetranychus_urticae");
+        tagMap.put("Tomato___Target_Spot","Corynespora_cassiicola");
+        tagMap.put("Tomato___Tomato_mosaic_virus","Tomato_mosaic_virus");
+        tagMap.put("Tomato___Tomato_Yellow_Leaf_Curl_Virus","Tomato_yellow_leaf_curl_virus");
 
     }
 

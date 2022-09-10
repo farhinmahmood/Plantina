@@ -90,26 +90,26 @@ public class HomeActivity extends AppCompatActivity {
         cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openCameraForAge();
+                openCameraForPlant();
             }
         });
 
         galleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openGalleryForAge();
+                openGalleryForPlant();
             }
         });
 
 
     }
 
-    private void openGalleryForAge() {
+    private void openGalleryForPlant() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         startActivityForResult(intent, REQUEST_CODE_GALLERY);
     }
 
-    private void openCameraForAge() {
+    private void openCameraForPlant() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CODE_CAMERA);
     }
